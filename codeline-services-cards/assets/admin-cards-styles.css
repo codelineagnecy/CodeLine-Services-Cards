@@ -1,0 +1,156 @@
+/**
+ * Service Cards Admin Styles
+ */
+
+/* Admin columns */
+.column-cl_image img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 6px;
+    display: block;
+}
+
+.clsc-thumb {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 6px;
+    display: block;
+}
+
+.column-cl_card_desc {
+    max-width: 40ch;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Admin edit form */
+.clsc-fallback-row {
+    background-color: #f5f5f5;
+}
+
+.clsc-fb-preview {
+    border: 1px solid #ddd;
+    padding: 5px;
+    border-radius: 6px;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fafafa;
+}
+
+.clsc-fb-preview img {
+    max-width: 120px;
+    height: auto;
+    border-radius: 6px;
+}
+
+.clsc-preview-img {
+    display: block;
+    max-width: 120px;
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    object-fit: contain;
+}
+
+.clsc-fb-image {
+    width: 100%;
+    margin-top: 8px;
+}
+
+.clsc-fb-title,
+.clsc-fb-desc {
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.clsc-fb-desc {
+    height: 80px;
+}
+
+.clsc-fb-save,
+.clsc-fb-cancel {
+    margin-right: 4px;
+}
+
+/* Edit row layout */
+.clsc-edit-form {
+    display: flex;
+    gap: 12px;
+    margin: 10px 0;
+}
+
+.clsc-edit-form-image {
+    width: 140px;
+    flex-shrink: 0;
+}
+
+.clsc-edit-form-content {
+    flex: 1;
+}
+
+.clsc-edit-form-content p {
+    margin-bottom: 12px;
+}
+
+.clsc-edit-form-content input,
+.clsc-edit-form-content textarea {
+    width: 100%;
+}
+
+/* Replacement classes for inline styles */
+.clsc-col-image { width: 100px; }
+.clsc-empty { color: #999; display: inline-block; }
+.clsp-detail-item-row { border:1px solid #e2e2e2; padding:12px; margin:0 0 12px; border-radius:6px; }
+.clsp-detail-item-row p { margin:0 0 8px; }
+.clsc-fullinput { width:100%; margin-bottom:10px; }
+.clsc-hr { margin:16px 0; border:0; border-top:1px solid #e5e5e5; }
+.clsc-muted { margin-top:0; color:#646970; }
+.clsp-detail-case-row { display:flex; gap:8px; align-items:center; margin:0 0 8px; }
+.clsc-select-full { width:100%; max-width:100%; }
+.clsc-image-preview { margin-top:12px; }
+.clsc-image-preview img { max-width:220px; height:auto; display:block; border-radius:8px; }
+.clsc-input-small { width:140px; }
+.clsc-maxwidth-700 { width:100%; max-width:700px; }
+.clsc-error-note { margin-top:8px; color:#b32d2e; }
+.clsc-maxwidth-480 { max-width: 480px; display: block; margin-top: 8px; }
+
+/* Toast */
+.clsc-toast {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 99999;
+    min-width: 0;
+    width: auto;
+    max-width: 180px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    color: #fff;
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.clsc-toast.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.clsc-toast.is-success {
+    background: #1e7e34;
+}
+
+.clsc-toast.is-error {
+    background: #b32d2e;
+}
