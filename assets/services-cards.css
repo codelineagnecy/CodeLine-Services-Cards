@@ -1,0 +1,809 @@
+/*
+ * Arrow glyphs: the exact "swiper-icons" font (Swiper 9.4.1, MIT licence,
+ * (c) Vladimir Kharlampidi) that the homepage Cases slider's arrows render
+ * with, registered under a Services-only family name so it can never clash
+ * with, or depend on, any Swiper stylesheet loaded elsewhere on the page.
+ */
+@font-face {
+    font-family: clsc-nav-icons;
+    src: url('data:application/font-woff;charset=utf-8;base64,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') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+.clsc {
+    position: relative;
+    /*
+     * Full-bleed width via 100vw, compensated for the vertical scrollbar:
+     * `vw` includes the scrollbar track but the `%` used to center it does
+     * not, so on any page tall enough to scroll this would otherwise shift
+     * the whole section left of the true viewport edge by half the
+     * scrollbar's width. --clsc-scrollbar-width (set by services-cards.js)
+     * cancels that out; it defaults to 0 so nothing changes before JS runs
+     * or if JS is unavailable.
+     */
+    width: calc(100vw - var(--clsc-scrollbar-width, 0px));
+    max-width: calc(100vw - var(--clsc-scrollbar-width, 0px));
+    margin-left: calc(50% - 50vw + (var(--clsc-scrollbar-width, 0px) / 2));
+    margin-right: calc(50% - 50vw + (var(--clsc-scrollbar-width, 0px) / 2));
+    box-sizing: border-box;
+    padding-left: 64px;
+    /*
+     * Card ratio, width, gap and radius are admin-configurable (Service Page
+     * -> Services Slider Style) and printed inline on .clsc; these fallbacks
+     * only apply if that inline style is missing.
+     */
+    --clsc-card-width: var(--clsc-width-desktop, 210px);
+    --clsc-gap: var(--clsc-gap-desktop, 20px);
+    --clsc-glow-inset: 26px;
+    /*
+     * Top/left need more breathing room than right/bottom: the strongest
+     * glow layer (hover) plus the floating card's own upward travel both
+     * land on these two edges, so they get a larger, separate inset. Capped
+     * at .clsc's own padding-left (64px here) so the track's compensating
+     * negative margin-left never pulls it past the viewport's left edge.
+     */
+    --clsc-glow-inset-top: 56px;
+    --clsc-glow-inset-left: 56px;
+}
+
+.clsc-track {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--clsc-gap);
+    /*
+     * Desktop: overflow hidden, so neither the mouse wheel nor a trackpad
+     * can scroll the track (and vertical page scrolling passes straight
+     * through). Only the Previous/Next arrows move it, via services-cards.js.
+     */
+    overflow-x: hidden;
+    overflow-y: hidden;
+    overflow-anchor: none;
+    scroll-snap-type: none;
+    touch-action: pan-y;
+    user-select: none;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    /*
+     * The image edge-light bleeds a few px past each image's own box; without
+     * this, the track's overflow clipping (needed for the slider) cuts it off
+     * at the top and on card 1's left edge, since the track otherwise has no
+     * spare room there. Padding pushes the clip boundary outward on the two
+     * sides that need it; the matching negative margin cancels the padding
+     * back out so card position/size and the track's flow footprint are
+     * unchanged. Top/left use the larger -top/-left insets (see .clsc) since
+     * hover's stronger glow and the floating cards' upward travel both land
+     * on those two edges. Right/bottom are left on the smaller shared inset:
+     * .clsc has no right padding (it's an intentional full-bleed peek
+     * layout), so bleeding right further would push the track past the
+     * viewport edge and cause horizontal scrolling.
+     */
+    padding-top: var(--clsc-glow-inset-top);
+    padding-left: var(--clsc-glow-inset-left);
+    margin-top: calc(var(--clsc-glow-inset-top) * -1);
+    margin-left: calc(var(--clsc-glow-inset-left) * -1);
+    /*
+     * Right/bottom don't need the negative-margin cancel: the track's width
+     * is already constrained to .clsc's available width (block box with
+     * width:auto), so this padding can't push the track past the viewport
+     * and cause page horizontal scroll — it just borrows a few px of the
+     * card layout area to give the last card's right glow and every card's
+     * bottom glow room before the track's own overflow clip.
+     */
+    padding-right: var(--clsc-glow-inset);
+    padding-bottom: var(--clsc-glow-inset);
+}
+
+.clsc-track::-webkit-scrollbar {
+    display: none;
+}
+
+.clsc-card {
+    flex: 0 0 var(--clsc-card-width);
+    width: var(--clsc-card-width);
+    min-width: var(--clsc-card-width);
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+}
+
+.clsc-link {
+    display: block;
+    color: #ffffff;
+    text-decoration: none;
+    text-align: center;
+}
+
+.clsc-image-wrap {
+    border-radius: var(--clsc-radius, 10px);
+    overflow: hidden;
+    aspect-ratio: var(--clsc-ratio-w, 9) / var(--clsc-ratio-h, 16);
+    margin-bottom: 28px;
+}
+
+.clsc .clsc-image-wrap .clsc-image {
+    display: block;
+    width: 100%;
+    height: 100% !important;
+    min-height: 100% !important;
+    max-height: none !important;
+    object-fit: cover !important;
+}
+
+.clsc-image--placeholder {
+    background: #ececec;
+}
+
+.clsc-title {
+    margin: 0 0 18px;
+    font-size: 24px;
+    line-height: 1.05;
+    font-weight: 700;
+    color: #ffffff;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    min-height: calc(1.05em * 2);
+}
+
+.clsc-desc {
+    font-size: 14px;
+    line-height: 1.55;
+    color: #ffffff;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.clsc-desc p {
+    margin: 0;
+}
+
+/*
+ * Arrows sit at the vertical center of the image area, not of the whole
+ * card: the image's rendered height is exactly card width x ratio. The
+ * track's negative margin-top collapses through .clsc (which has no top
+ * padding/border), so the track box starts at .clsc's top edge and the
+ * image starts one --clsc-glow-inset-top (the track's padding-top) below
+ * it. Being pure CSS, this stays centered whenever the administrator
+ * changes the ratio or the card width.
+ */
+.clsc-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: calc(var(--clsc-glow-inset-top) + var(--clsc-card-width) * var(--clsc-ratio-h, 16) / var(--clsc-ratio-w, 9) / 2);
+    left: 10px;
+    right: 10px;
+    transform: translateY(-50%);
+    z-index: 40;
+    pointer-events: none;
+}
+
+/* Arrow look copied from the homepage Cases slider (Swiper nav buttons). */
+.clsc .clsc-btn {
+    box-sizing: border-box;
+    width: 40px;
+    height: 40px;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: #fff;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+    pointer-events: auto;
+    appearance: none;
+    -webkit-appearance: none;
+    opacity: 1;
+}
+
+.clsc .clsc-btn::after {
+    font-family: clsc-nav-icons;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: none !important;
+    letter-spacing: 0;
+    font-variant: initial;
+    line-height: 1;
+}
+
+.clsc .clsc-arrow--prev::after {
+    content: 'prev';
+}
+
+.clsc .clsc-arrow--next::after {
+    content: 'next';
+}
+
+.clsc .clsc-btn:hover {
+    background: #000;
+    color: #fff;
+}
+
+.clsc .clsc-btn:disabled {
+    opacity: 0.35;
+    cursor: auto;
+    pointer-events: none;
+}
+
+.clsc .clsc-btn[hidden] {
+    display: none !important;
+}
+
+.clsc-track:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 4px;
+}
+
+.clsc-link:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 5px;
+    border-radius: var(--clsc-radius, 10px);
+}
+
+.clsc .clsc-btn:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 3px;
+}
+
+.clsc-card.clsc-reveal-pending {
+    opacity: 0.18;
+    filter: blur(14px);
+    transform: translateY(22px) scale(0.97);
+}
+
+.clsc-card.clsc-revealed {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+    transition:
+        opacity 1100ms cubic-bezier(0.22, 1, 0.36, 1),
+        filter 1100ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/*
+ * Continuous floating motion, applied only after the entrance reveal has
+ * finished (JS adds .clsc-floating once the .clsc-revealed transition
+ * completes). This animates transform on .clsc-card itself, a different
+ * element from .clsc-image-wrap (which carries the hover translateY/glow),
+ * so the two transforms never fight — they simply compose visually.
+ * Each card gets its own randomized --clsc-float-distance/-duration/-delay
+ * inline (set by JS) so the fleet doesn't move in lockstep.
+ */
+.clsc-card.clsc-floating {
+    animation-name: clsc-float;
+    animation-duration: var(--clsc-float-duration, 5.2s);
+    animation-delay: var(--clsc-float-delay, 0s);
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
+
+@keyframes clsc-float {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(var(--clsc-float-distance, -10px)) scale(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .clsc-card.clsc-reveal-pending {
+        opacity: 1;
+        filter: none;
+        transform: none;
+    }
+
+    .clsc-card.clsc-floating {
+        animation: none !important;
+    }
+}
+
+/*
+ * Tablet and mobile (below 1200px, the same breakpoint as the Cases
+ * slider): no arrows, no autoplay, native touch swipe with snap. The .98
+ * upper bounds here and below complement the Cases/JS min-width: 1200px
+ * and 768px thresholds exactly, even on fractional (zoomed/HiDPI)
+ * viewport widths.
+ */
+@media (max-width: 1199.98px) {
+    .clsc {
+        padding-left: 0;
+        --clsc-card-width: var(--clsc-width-tablet, 195px);
+        --clsc-gap: var(--clsc-gap-tablet, 16px);
+        --clsc-glow-inset-left: 56px;
+        --clsc-leading-start: 32px;
+        --clsc-leading-offset: 32px;
+    }
+
+    .clsc-track {
+        padding-left: calc(var(--clsc-glow-inset-left) + var(--clsc-leading-offset, 32px));
+        margin-left: calc(var(--clsc-glow-inset-left) * -1);
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-x pan-y;
+        overscroll-behavior-x: contain;
+        scroll-snap-type: x mandatory;
+        scroll-padding-left: calc(var(--clsc-glow-inset-left) + var(--clsc-leading-offset, 32px));
+        user-select: auto;
+    }
+
+    .clsc-track::before {
+        content: none;
+    }
+
+    .clsc-controls {
+        display: none;
+    }
+}
+
+@media (max-width: 1024px) {
+    .clsc-title {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .clsc {
+        padding-left: 0;
+        --clsc-card-width: var(--clsc-width-mobile, 180px);
+        --clsc-gap: var(--clsc-gap-mobile, 12px);
+        --clsc-glow-inset: 12px;
+        --clsc-glow-inset-top: 26px;
+        --clsc-glow-inset-left: 48px;
+        --clsc-leading-start: 24px;
+        --clsc-leading-offset: 24px;
+    }
+
+    .clsc-track {
+        padding-left: calc(var(--clsc-glow-inset-left) + var(--clsc-leading-offset, 24px));
+        margin-left: calc(var(--clsc-glow-inset-left) * -1);
+        padding-right: calc(8px + var(--clsc-glow-inset));
+        scroll-padding-left: calc(var(--clsc-glow-inset-left) + var(--clsc-leading-offset, 24px));
+    }
+
+    .clsc-track::before {
+        content: none;
+        flex-basis: 0;
+        width: 0;
+    }
+
+    .clsc-title {
+        font-size: 21px;
+        white-space: normal;
+    }
+
+    .clsc-desc {
+        font-size: 15px;
+    }
+}
+
+.clsp {
+    padding-block: 24px;
+}
+
+.clsp-page-intro {
+    max-width: 560px;
+    padding: 14px 0 48px;
+}
+
+.clsp-page-intro-title {
+    margin: 0 0 20px;
+    color: #111;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: clamp(48px, 6.4vw, 76px);
+    line-height: 0.92;
+    font-weight: 400;
+    letter-spacing: -0.05em;
+}
+
+.clsp-page-intro-text {
+    margin: 0;
+    max-width: 540px;
+    color: #8a8a8a;
+    font-size: clamp(15px, 1.05vw, 28px);
+    line-height: 1.65;
+}
+
+.clsp-list {
+    display: flex;
+    flex-direction: column;
+    gap: 120px;
+}
+
+.clsp-item {
+    display: grid;
+    grid-template-columns: minmax(260px, 0.75fr) minmax(0, 1.55fr);
+    gap: 40px;
+    align-items: start;
+    padding-bottom: 28px;
+    padding-top: 28px;
+    border-top: 1px solid #e6e6e6;
+}
+
+.clsp-copy {
+    max-width: 420px;
+}
+
+.clsp-title {
+    margin: 0 0 18px;
+    color: #111;
+    font-size: clamp(24px, 2.7vw, 36px);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-weight: 500;
+}
+
+.clsp-text {
+    margin: 0;
+    color: #7a7a7a;
+    font-size: clamp(13px, 0.95vw, 15px);
+    line-height: 1.55;
+}
+
+.clsp-labels {
+    margin-top: 22px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-start;
+}
+
+.clsp-pill {
+    display: inline-flex;
+    align-items: center;
+    background: #efefef;
+    color: #5f5f5f;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    line-height: 1;
+}
+
+.clsp-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 28px;
+    min-width: 124px;
+    height: 38px;
+    padding-inline: 16px;
+    border-radius: 999px;
+    border: 1px solid var(--clsp-readmore-border, #111);
+    text-decoration: none;
+    color: var(--clsp-readmore-text, #fff);
+    background: var(--clsp-readmore-bg, #111);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    font-weight: 700;
+    transition: all 0.2s ease;
+}
+
+.clsp-cta:hover {
+    background: var(--clsp-readmore-hover-bg, #111);
+    color: var(--clsp-readmore-hover-text, #fff);
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.clsp-cases {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.clsp-case {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.clsp-case-image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 2px;
+    transform: scale(1);
+    transition: transform 0.36s cubic-bezier(0.22, 1, 0.36, 1), filter 0.36s ease;
+    will-change: transform, filter;
+}
+
+.clsp-case-image--placeholder {
+    background: #ececec;
+}
+
+.clsp-case-title {
+    display: block;
+    margin-top: 12px;
+    color: #111;
+    font-size: 18px;
+    line-height: 1.3;
+    transition: opacity 0.24s ease;
+}
+
+/* Service Page detail pages: hide default theme author/date meta line */
+body.single-cl_service_page .entry-meta,
+body.single-cl_service_page .posted-on,
+body.single-cl_service_page .byline,
+body.single-cl_service_page .wp-block-post-author,
+body.single-cl_service_page .wp-block-post-date,
+body.single-cl_service_page .wp-block-post-author-name {
+    display: none !important;
+}
+
+/* Keep image first: hide theme title/header above the content on Service Page detail */
+body.single-cl_service_page .entry-header,
+body.single-cl_service_page .page-header,
+body.single-cl_service_page .hero-section {
+    display: none !important;
+}
+
+body.single-cl_service_page .site-content .ast-container {
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+body.single-cl_service_page .clsp-detail-wrap {
+    width: 100%;
+}
+
+body.single-cl_service_page .clsp-detail-content {
+    width: min(980px, 100% - 48px);
+    margin: 0 auto;
+    text-align: left;
+}
+
+body.single-cl_service_page .clsp-detail-content--before-media {
+    margin-bottom: 20px;
+}
+
+body.single-cl_service_page .clsp-detail-content--after-media {
+    margin-top: 28px;
+}
+
+body.single-cl_service_page .clsp-detail-title {
+    margin: 0 0 18px;
+    color: #111;
+    font-size: clamp(32px, 3.5vw, 56px);
+    line-height: 1.03;
+    letter-spacing: -0.03em;
+    font-weight: 700;
+    text-align: left;
+}
+
+body.single-cl_service_page .clsp-detail-content p,
+body.single-cl_service_page .clsp-detail-content li,
+body.single-cl_service_page .clsp-detail-content blockquote {
+    text-align: left;
+}
+
+body.single-cl_service_page .clsp-detail-content ul,
+body.single-cl_service_page .clsp-detail-content ol {
+    padding-left: 1.25em;
+}
+
+body.single-cl_service_page .clsp-detail-rows {
+    margin-top: 56px;
+}
+
+body.single-cl_service_page .clsp-detail-row {
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+body.single-cl_service_page .clsp-detail-row-title {
+    margin: 0;
+    color: #111;
+    font-size: clamp(32px, 3.2vw, 44px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 500;
+}
+
+body.single-cl_service_page .clsp-detail-row-text,
+body.single-cl_service_page .clsp-detail-row-text p {
+    margin: 14px 0 0;
+    color: #7d7d7d;
+    font-size: clamp(16px, 1.05vw, 21px);
+    line-height: 1.6;
+}
+
+body.single-cl_service_page .clsp-detail-split {
+    margin-top: 56px;
+    border-top: 1px solid #e8e8e8;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 30px 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+    gap: 56px;
+    align-items: start;
+}
+
+body.single-cl_service_page .clsp-detail-cases {
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+body.single-cl_service_page .clsp-detail-case {
+    display: grid;
+    grid-template-columns: minmax(120px, 180px) minmax(0, 1fr);
+    gap: 14px;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+}
+
+body.single-cl_service_page .clsp-detail-case-image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+body.single-cl_service_page .clsp-detail-case-image--placeholder {
+    background: #ececec;
+}
+
+body.single-cl_service_page .clsp-detail-case-title {
+    display: block;
+    margin-top: 0;
+    color: #111;
+    font-size: 17px;
+    line-height: 1.35;
+}
+
+body.single-cl_service_page .clsp-detail-media {
+    margin: 0;
+    width: min(980px, calc(100vw - 24px));
+    max-width: 980px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 8px;
+    overflow: hidden;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 16 / 7;
+}
+
+body.single-cl_service_page .clsp-detail-media-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .clsp-case:hover .clsp-case-image {
+        transform: scale(1.035);
+        filter: saturate(1.04) contrast(1.03);
+    }
+
+    .clsp-case:hover .clsp-case-title {
+        opacity: 0.84;
+    }
+}
+
+.clsp-case--empty .clsp-case-title {
+    display: none;
+}
+
+@media (max-width: 1024px) {
+    .clsp-item {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .clsp-copy {
+        max-width: 760px;
+    }
+
+    .clsp-cases {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 767px) {
+    .clsp-page-intro {
+        padding: 8px 0 34px;
+    }
+
+    .clsp-page-intro-title {
+        margin-bottom: 14px;
+        font-size: clamp(42px, 11vw, 60px);
+    }
+
+    .clsp-page-intro-text {
+        font-size: 17px;
+        line-height: 1.55;
+    }
+
+    .clsp-list {
+        gap: 46px;
+    }
+
+    .clsp-cases {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        scroll-snap-type: x mandatory;
+        padding-right: 8px;
+    }
+
+    .clsp-cases::-webkit-scrollbar {
+        display: none;
+    }
+
+    .clsp-case {
+        flex: 0 0 calc(100% - 64px);
+        min-width: calc(100% - 64px);
+        scroll-snap-align: start;
+    }
+
+    .clsp-case-title {
+        margin-top: 10px;
+        font-size: 17px;
+    }
+
+    body.single-cl_service_page .clsp-detail-content {
+        width: min(980px, 100% - 32px);
+    }
+
+    body.single-cl_service_page .clsp-detail-media {
+        width: min(980px, calc(100vw - 12px));
+        aspect-ratio: 16 / 9;
+    }
+
+    body.single-cl_service_page .clsp-detail-row {
+        padding: 0;
+    }
+
+    body.single-cl_service_page .clsp-detail-row-title {
+        font-size: clamp(28px, 8vw, 40px);
+    }
+
+    body.single-cl_service_page .clsp-detail-row-text,
+    body.single-cl_service_page .clsp-detail-row-text p {
+        font-size: clamp(15px, 4.6vw, 18px);
+    }
+
+    body.single-cl_service_page .clsp-detail-cases {
+        gap: 14px;
+    }
+
+    body.single-cl_service_page .clsp-detail-split {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding: 22px 0;
+    }
+
+    body.single-cl_service_page .clsp-detail-case {
+        grid-template-columns: 120px 1fr;
+        gap: 12px;
+    }
+
+    body.single-cl_service_page .clsp-detail-case-title {
+        font-size: 18px;
+    }
+}

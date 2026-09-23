@@ -1,0 +1,103 @@
+/*
+ * Lightweight code-generated background.
+ * `.clsc-code-background` is applied automatically by services-background.js
+ * to the Services section it auto-detects (or to a manually-added
+ * "codeline-services-background" class, kept for backwards compatibility).
+ */
+
+.clsc-code-background {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: #090909 !important;
+}
+
+.clsc-code-background,
+.clsc-code-background h1,
+.clsc-code-background h2,
+.clsc-code-background h3,
+.clsc-code-background h4,
+.clsc-code-background h5,
+.clsc-code-background h6,
+.clsc-code-background p,
+.clsc-code-background span,
+.clsc-code-background li,
+.clsc-code-background a,
+.clsc-code-background .elementor-widget-container,
+.clsc-code-background .elementor-heading-title,
+.clsc-code-background .elementor-widget-text-editor,
+.clsc-code-background .elementor-widget-text-editor *,
+.clsc-code-background .elementor-widget-theme-post-content,
+.clsc-code-background .elementor-widget-theme-post-content *,
+.clsc-services-heading,
+.clsc-services-copy,
+.clsc-services-copy * {
+    color: #ffffff !important;
+}
+
+.clsc-code-background .elementor-background-video-container,
+.clsc-code-background .elementor-background-video-hosted,
+.clsc-code-background .elementor-background-video-embed,
+.clsc-code-background > .elementor-background-overlay {
+    display: none !important;
+}
+
+.clsc-code-background > .clsc-code-background-canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.clsc-code-background > :not(.clsc-code-background-canvas):not(.elementor-background-video-container):not(.elementor-background-overlay) {
+    position: relative;
+    z-index: 2;
+}
+
+/*
+ * "Onze Services" heading: elegant classic-serif look, one line at every
+ * breakpoint. font-size steps down at the plugin's own tablet/mobile
+ * breakpoints (matching .clsc-card's) rather than a fluid clamp, so the
+ * heading always keeps clear room to spare instead of hugging the edge.
+ *
+ * services-background.js relocates the detected heading to be a direct
+ * child of .clsc-code-background (the resolved section) rather than
+ * leaving it wherever the host page's own Elementor markup put it: that
+ * wrapper's rendered width depends on page-specific container settings
+ * outside the plugin's control (e.g. a "Content Width" narrower than the
+ * section itself at some breakpoint), while the section always reflects
+ * the real available width. Being a direct child there also means it
+ * already inherits position:relative/z-index:2 from the rule above, so it
+ * layers correctly above the canvas with no extra positioning needed here.
+ */
+.clsc-services-heading {
+    display: block;
+    width: 100%;
+    max-width: calc(100% - 48px);
+    margin: 0 auto 24px;
+    text-align: center;
+    font-family: Georgia, "Times New Roman", serif;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    text-shadow: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 40px;
+}
+
+@media (max-width: 1024px) {
+    .clsc-services-heading {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 767px) {
+    .clsc-services-heading {
+        font-size: 26px;
+    }
+}
