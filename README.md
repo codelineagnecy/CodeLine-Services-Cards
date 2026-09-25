@@ -1,6 +1,6 @@
 # CodeLine Services Cards
 
-**Version:** 1.5.5
+**Version:** 1.5.6
 
 A WordPress plugin for managing and displaying CodeLine service cards. It provides:
 
@@ -165,30 +165,60 @@ These are the same breakpoints the CodeLine Cases homepage slider uses.
   - black with a white icon on hover,
   - no shadow.
 - The arrows are vertically centred on the card images, and stay centred when the ratio or card width changes.
-- An arrow is dimmed and disabled at the start or end of the slider. Both arrows are hidden when all cards fit on screen.
+- An arrow is dimmed and disabled at the start or end of the slider. Both arrows are hidden when all cards fit on screen, and the cards are then centred (see *Centring on wide screens*).
+- With autoplay enabled, the arrows loop and are never disabled (see *Optional desktop autoplay*).
 
 ### Tablet and mobile (below 1200px)
 
 - The arrows are hidden.
 - Cards are moved by native touch swipe, snapping to each card. Vertical page scrolling is not blocked.
 - Autoplay never runs, regardless of the admin setting.
+- If all cards fit on screen, they are centred (see *Centring on wide screens*).
 - The slider does not cause horizontal page scrolling.
 
 ### Optional desktop autoplay
 
 Autoplay is off by default and can only be enabled by an administrator in **Services Slider Style**. There is no play / pause control for visitors.
 
-When enabled, the slider glides continuously at 40px per second. At each end it pauses for 1.5 seconds, then reverses direction.
+When enabled, the slider moves like the homepage Cases slider: a continuous marquee that glides to the left at a constant 40px per second and loops endlessly. It never reverses, pauses at an end, or steps slide by slide. It also moves when all cards would fit on screen.
 
-Autoplay only runs when **all** of the following are true:
+How the loop works:
+
+- On desktop, with autoplay on and reduced motion off, the script adds copies of the cards: one set before the real cards and enough sets after them to fill the track.
+- The position is kept within the real cards' lap. When the marquee passes one full set, it moves back by exactly one set. The content at that point is identical, so the move is invisible.
+- The copies have `aria-hidden="true"`, carry no `id` attributes, and their links have `tabindex="-1"`. Screen readers and keyboard users only reach the real cards. A mouse click on a copy still opens that service, but never gives the copy focus.
+- The copies float in step with their original cards, so the loop seam never shows a vertical jump.
+- The browser scrolls in whole device pixels. The remaining fraction of a pixel is applied as a tiny `translate` on the track, so the glide is as even as the Cases slider's.
+- Below 1200px, when autoplay is off, or with reduced motion on, no copies exist.
+
+Autoplay only moves when **all** of the following are true:
 
 - the viewport is 1200px or wider,
 - the visitor has not enabled "reduce motion" in their operating system,
 - the browser tab is visible,
-- the mouse is not over the slider and keyboard focus is not inside it,
+- the mouse is not over the slider,
+- keyboard focus is not inside it (focus from a mouse click on an arrow does not pause it),
 - no arrow animation is in progress.
 
-Each animation step is capped, so returning to a background tab does not make the slider jump. The arrows keep working while autoplay is enabled.
+When autoplay pauses, it resumes from the exact position where it stopped. Each animation step is capped at 100ms, so returning to a background tab does not make the slider jump.
+
+While autoplay is on:
+
+- The Previous / Next arrows stay visible and are never disabled, because the loop has no end.
+- Each click moves one card, and rapid clicks add up.
+- Autoplay continues after the pointer leaves the slider.
+- When keyboard focus moves to a card that is currently shown as a copy, the real card takes the copy's place, so the track does not jump.
+
+The Services autoplay setting is stored only in `clsc_slider_style` and is independent of the CodeLine Cases settings. The two plugins share no code.
+
+### Centring on wide screens
+
+When autoplay is not running (it is off, the viewport is below 1200px, or reduced motion is on), the card group is centred when it fits.
+
+- A group fits when the combined width of all cards and gaps, plus the normal leading space on both sides, is no wider than the slider. The leading space is 64px on desktop, 32px on tablet and 24px on mobile.
+- When the group fits, the free space to its left and right is equal, and the arrows are hidden.
+- When the group does not fit, the slider behaves as an overflow slider exactly as before, with every card reachable.
+- The check uses the cards' configured width and gap, so it follows the admin settings. It re-runs whenever the slider is resized.
 
 ### Accessibility and reduced motion
 
@@ -196,7 +226,7 @@ Each animation step is capped, so returning to a background tab does not make th
 - The slider track is focusable and can be moved with the Left / Right arrow keys.
 - Links, arrows and the track show a visible focus outline.
 - With `prefers-reduced-motion: reduce`:
-  - autoplay is disabled,
+  - autoplay is disabled and no card copies are created,
   - the card reveal and floating animations are disabled,
   - arrow navigation moves instantly instead of animating,
   - the canvas background does not animate.
@@ -328,7 +358,7 @@ Do **not** include:
 
 - **The slider looks unstyled or outdated.**
   - Clear the page cache or CDN cache.
-  - Confirm `services-cards.css?ver=1.5.5` is loading.
+  - Confirm `services-cards.css?ver=1.5.6` is loading.
 - **Arrows do not appear on desktop.**
   - Arrows only show at 1200px and wider.
   - They are hidden when all cards fit on screen.

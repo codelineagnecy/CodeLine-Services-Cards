@@ -27,7 +27,14 @@
     margin-left: calc(50% - 50vw + (var(--clsc-scrollbar-width, 0px) / 2));
     margin-right: calc(50% - 50vw + (var(--clsc-scrollbar-width, 0px) / 2));
     box-sizing: border-box;
-    padding-left: 64px;
+    padding-left: var(--clsc-edge-inset);
+    /*
+     * Space before the first card at each breakpoint (desktop: .clsc's own
+     * padding; tablet/mobile: the track's leading offset). When all cards
+     * fit with this space on both sides, services-cards.js adds
+     * .clsc--centered (see below).
+     */
+    --clsc-edge-inset: 64px;
     /*
      * Card ratio, width, gap and radius are admin-configurable (Service Page
      * -> Services Slider Style) and printed inline on .clsc; these fallbacks
@@ -96,6 +103,18 @@
 
 .clsc-track::-webkit-scrollbar {
     display: none;
+}
+
+/*
+ * All cards fit: center the group. The content box already starts one
+ * --clsc-edge-inset from the section's left edge at every breakpoint, so
+ * giving it the same inset on the right makes it symmetric and the free
+ * space on both sides equal. Only applied when nothing overflows, so no
+ * card can become unreachable.
+ */
+.clsc.clsc--centered .clsc-track {
+    justify-content: center;
+    padding-right: var(--clsc-edge-inset);
 }
 
 .clsc-card {
@@ -322,6 +341,7 @@
         --clsc-glow-inset-left: 56px;
         --clsc-leading-start: 32px;
         --clsc-leading-offset: 32px;
+        --clsc-edge-inset: var(--clsc-leading-offset);
     }
 
     .clsc-track {
@@ -361,6 +381,7 @@
         --clsc-glow-inset-left: 48px;
         --clsc-leading-start: 24px;
         --clsc-leading-offset: 24px;
+        --clsc-edge-inset: var(--clsc-leading-offset);
     }
 
     .clsc-track {

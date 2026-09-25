@@ -2,7 +2,7 @@
 /**
  * Plugin Name: CodeLine Services Cards
  * Description: Beheer en toon CodeLine service cards, service pages en een lichte geanimeerde achtergrond.
- * Version: 1.5.5
+ * Version: 1.5.6
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Text Domain: codeline-services-cards
@@ -33,7 +33,7 @@ final class CodeLine_Services_Cards {
     use CodeLine_Services_Cards_Frontend_Trait;
     use CodeLine_Services_Cards_Slider_Settings_Trait;
 
-    const VERSION = '1.5.5';
+    const VERSION = '1.5.6';
     const DEFAULT_CARD_LIMIT = 4;
     const POST_TYPE = 'post';
     const SERVICE_POST_TYPE = 'cl_service_page';
