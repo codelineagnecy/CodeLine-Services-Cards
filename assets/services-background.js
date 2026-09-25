@@ -389,37 +389,32 @@
     }
 
     var HEADING_TEXT_TAGS = { P: 1, H1: 1, H2: 1, H3: 1, H4: 1, H5: 1, H6: 1, SPAN: 1, DIV: 1 };
+    var HEADING_SELECTOR = '.elementor-heading-title';
+    var COPY_WIDGET_SELECTOR = '.elementor-widget-heading, .elementor-widget-text-editor, .elementor-widget-theme-post-content';
 
-    // Relocate the detected heading to be a direct child of the resolved
-    // section (the same element `mountBackground` paints black and sizes to
-    // the full section width). Its original position is usually inside an
-    // Elementor widget/column wrapper whose own rendered width depends on
-    // page-specific container settings outside the plugin's control (e.g. a
-    // narrower "Content Width" at one breakpoint) — moving the heading out
-    // of that wrapper, rather than trying to anchor/size it relative to
-    // whatever that wrapper turns out to be, is what makes centering and
-    // single-line sizing reliable regardless of the host page's own layout.
-    function relocateHeading(section, heading) {
-        if (!section || !heading || section.contains(heading) && heading.parentElement === section) {
-            return;
-        }
-
-        section.insertBefore(heading, section.firstChild);
+    // Heading/copy detection only ever looks inside the resolved Services
+    // section and only adds classes: it never moves, clones or recreates
+    // Elementor content, so every heading/text stays inside its own widget
+    // and keeps its Elementor spacing, alignment and responsive controls.
+    // Without an Elementor section (the `.clsc` wrapper is its own target)
+    // there is nothing outside the cards to mark.
+    function isMarkable(section, clscRoot, el) {
+        return !!el && section !== clscRoot && section.contains(el) && !clscRoot.contains(el);
     }
 
-    // Most direct, most reliable case: Elementor's Text Editor widget often
-    // holds both the "Onze Services" copy and the `[codeline_services_cards]`
-    // shortcode in one widget, so the heading renders as a plain sibling
-    // element (usually a <p>, not a `.elementor-heading-title`) immediately
-    // before `.clsc` in the DOM. Checked before the ancestor/section
-    // heuristics below, which only recognize real Heading widgets.
+    // Elementor's Text Editor widget can hold both the heading copy and the
+    // `[codeline_services_cards]` shortcode in one widget, so the heading
+    // renders as a plain sibling element (usually a <p>, not a
+    // `.elementor-heading-title`) immediately before `.clsc`.
     function markPrecedingSibling(clscRoot, section) {
         var sibling = clscRoot.previousElementSibling;
 
         while (sibling) {
             if (HEADING_TEXT_TAGS[sibling.tagName] && (sibling.textContent || '').trim() !== '') {
+                if (!isMarkable(section, clscRoot, sibling)) {
+                    return false;
+                }
                 sibling.classList.add('clsc-services-heading');
-                relocateHeading(section, sibling);
                 return true;
             }
 
@@ -434,6 +429,32 @@
         return false;
     }
 
+    function precedes(a, b) {
+        return !!(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING);
+    }
+
+    // The copy is the first text widget (Heading, Text Editor or Post
+    // Content) after the heading's own widget and before the cards, inside
+    // the same Services section.
+    function findServicesCopy(section, clscRoot, heading) {
+        var headingWidget = heading.closest('.elementor-widget') || heading;
+        var widgets = section.querySelectorAll(COPY_WIDGET_SELECTOR);
+
+        for (var i = 0; i < widgets.length; i += 1) {
+            var widget = widgets[i];
+
+            if (widget === headingWidget || widget.contains(clscRoot) || !isMarkable(section, clscRoot, widget)) {
+                continue;
+            }
+
+            if (precedes(headingWidget, widget) && precedes(widget, clscRoot) && (widget.textContent || '').trim() !== '') {
+                return widget;
+            }
+        }
+
+        return null;
+    }
+
     function markServicesHeading(clscRoot) {
         if (!clscRoot) {
             return;
@@ -441,65 +462,44 @@
 
         var section = resolveServiceSection(clscRoot);
 
+        if (!section || section === clscRoot) {
+            return;
+        }
+
         if (markPrecedingSibling(clscRoot, section)) {
             return;
         }
 
-        function markIn(scope) {
-            if (!scope || clscRoot.contains(scope)) {
-                return false;
+        var candidates = section.querySelectorAll(HEADING_SELECTOR);
+        var heading = null;
+
+        for (var i = 0; i < candidates.length; i += 1) {
+            if (isMarkable(section, clscRoot, candidates[i])) {
+                heading = candidates[i];
+                break;
             }
-
-            var heading = scope.matches && scope.matches('.elementor-heading-title')
-                ? scope
-                : scope.querySelector && scope.querySelector('.elementor-heading-title');
-
-            if (heading && !clscRoot.contains(heading)) {
-                heading.classList.add('clsc-services-heading');
-                relocateHeading(section, heading);
-
-                var textWidget = null;
-                if (scope.querySelector) {
-                    textWidget = scope.querySelector('.elementor-widget-text-editor, .elementor-widget-theme-post-content, .elementor-widget-text-editor p, .elementor-widget-theme-post-content p');
-                }
-                if (textWidget && !clscRoot.contains(textWidget)) {
-                    textWidget.classList.add('clsc-services-copy');
-                }
-                return true;
-            }
-
-            return false;
         }
 
-        if (markIn(section)) {
+        // No heading in the Services section: show none rather than
+        // borrowing one from another section.
+        if (!heading) {
             return;
         }
 
-        var current = clscRoot.parentElement;
-        var depth = 0;
+        heading.classList.add('clsc-services-heading');
 
-        while (current && depth < 8) {
-            if (markIn(current)) {
-                return;
-            }
-
-            var sibling = current.previousElementSibling;
-            while (sibling) {
-                if (markIn(sibling)) {
-                    return;
-                }
-                sibling = sibling.previousElementSibling;
-            }
-
-            current = current.parentElement;
-            depth += 1;
+        var copy = findServicesCopy(section, clscRoot, heading);
+        if (copy) {
+            copy.classList.add('clsc-services-copy');
         }
     }
 
     // Auto-detection never scans the whole document for arbitrary sections:
     // it only ever starts from elements the plugin itself rendered
     // (`.clsc`) or that were explicitly opted in (the legacy manual class),
-    // so it can never attach to the Hero or any unrelated section.
+    // and heading/copy marking is confined to the section resolved from
+    // `.clsc`, so content in the Hero, Cases or any other section is never
+    // touched.
     function collectTargets() {
         var targets = [];
         var seen = [];

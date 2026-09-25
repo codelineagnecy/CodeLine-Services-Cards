@@ -29,9 +29,9 @@
 .clsc-code-background .elementor-widget-text-editor *,
 .clsc-code-background .elementor-widget-theme-post-content,
 .clsc-code-background .elementor-widget-theme-post-content *,
-.clsc-services-heading,
-.clsc-services-copy,
-.clsc-services-copy * {
+.clsc-code-background .clsc-services-heading,
+.clsc-code-background .clsc-services-copy,
+.clsc-code-background .clsc-services-copy * {
     color: #ffffff !important;
 }
 
@@ -58,46 +58,31 @@
 }
 
 /*
- * "Onze Services" heading: elegant classic-serif look, one line at every
- * breakpoint. font-size steps down at the plugin's own tablet/mobile
- * breakpoints (matching .clsc-card's) rather than a fluid clamp, so the
- * heading always keeps clear room to spare instead of hugging the edge.
+ * Services heading: elegant classic-serif look. font-size steps down at the
+ * plugin's own tablet/mobile breakpoints (matching .clsc-card's).
  *
- * services-background.js relocates the detected heading to be a direct
- * child of .clsc-code-background (the resolved section) rather than
- * leaving it wherever the host page's own Elementor markup put it: that
- * wrapper's rendered width depends on page-specific container settings
- * outside the plugin's control (e.g. a "Content Width" narrower than the
- * section itself at some breakpoint), while the section always reflects
- * the real available width. Being a direct child there also means it
- * already inherits position:relative/z-index:2 from the rule above, so it
- * layers correctly above the canvas with no extra positioning needed here.
+ * services-background.js only adds this class; the heading stays inside
+ * its own Elementor widget. Layout (margin, padding, width, alignment) is
+ * deliberately left to the Elementor widget and container controls, and
+ * only applies inside the dark Services background.
  */
-.clsc-services-heading {
-    display: block;
-    width: 100%;
-    max-width: calc(100% - 48px);
-    margin: 0 auto 24px;
-    text-align: center;
+.clsc-code-background .clsc-services-heading {
     font-family: Georgia, "Times New Roman", serif;
     font-style: normal;
     font-weight: 400;
     letter-spacing: -0.01em;
     text-shadow: none;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     font-size: 40px;
 }
 
 @media (max-width: 1024px) {
-    .clsc-services-heading {
+    .clsc-code-background .clsc-services-heading {
         font-size: 32px;
     }
 }
 
 @media (max-width: 767px) {
-    .clsc-services-heading {
+    .clsc-code-background .clsc-services-heading {
         font-size: 26px;
     }
 }

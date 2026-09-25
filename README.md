@@ -1,6 +1,6 @@
 # CodeLine Services Cards
 
-**Version:** 1.5.4
+**Version:** 1.5.5
 
 A WordPress plugin for managing and displaying CodeLine service cards. It provides:
 
@@ -207,6 +207,8 @@ Each animation step is capped, so returning to a background tab does not make th
 
 The background pauses while it is off screen or the browser tab is hidden.
 
+If the section also contains an Elementor heading (and a text widget after it, before the cards), the plugin only adds a class so they show in white on the dark background. They are never moved out of their Elementor widgets, so the widget and container spacing, alignment and responsive controls keep working. If the section has no heading, none is shown; headings from other sections are never used.
+
 ## Architecture
 
 ```
@@ -326,7 +328,7 @@ Do **not** include:
 
 - **The slider looks unstyled or outdated.**
   - Clear the page cache or CDN cache.
-  - Confirm `services-cards.css?ver=1.5.4` is loading.
+  - Confirm `services-cards.css?ver=1.5.5` is loading.
 - **Arrows do not appear on desktop.**
   - Arrows only show at 1200px and wider.
   - They are hidden when all cards fit on screen.
