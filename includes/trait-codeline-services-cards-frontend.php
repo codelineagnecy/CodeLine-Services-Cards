@@ -76,11 +76,12 @@ trait CodeLine_Services_Cards_Frontend_Trait {
 
                 $case_ids = get_post_meta($post_id, self::META_SERVICE_DETAIL_CASE_IDS, true);
                 $cards = '';
-                if (is_array($case_ids) && !empty($case_ids)) {
+                $detail_case_post_type = $this->resolve_case_post_type();
+                if (is_array($case_ids) && !empty($case_ids) && '' !== $detail_case_post_type) {
                     $case_ids = array_values(array_unique(array_filter(array_map('absint', $case_ids))));
                     if (!empty($case_ids)) {
                         $case_query = new WP_Query(array(
-                            'post_type'           => $this->resolve_case_post_type(self::CASE_POST_TYPE_DEFAULT),
+                            'post_type'           => $detail_case_post_type,
                             'post_status'         => 'publish',
                             'posts_per_page'      => count($case_ids),
                             'post__in'            => $case_ids,
@@ -158,7 +159,9 @@ trait CodeLine_Services_Cards_Frontend_Trait {
                 return '';
             }
 
-            $case_post_type = $this->resolve_case_post_type((string) $atts['case_post_type']);
+            // case_post_type is still accepted for backward compatibility but ignored:
+            // Cases are only ever read from the allowed CodeLine Cases post type.
+            $case_post_type = $this->resolve_case_post_type();
 
             $case_taxonomy = $this->resolve_case_taxonomy($case_post_type, (string) $atts['case_taxonomy']);
 

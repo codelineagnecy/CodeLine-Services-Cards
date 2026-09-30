@@ -1,6 +1,6 @@
 # CodeLine Services Cards
 
-**Version:** 1.5.6
+**Version:** 1.5.7
 
 A WordPress plugin for managing and displaying CodeLine service cards. It provides:
 
@@ -68,7 +68,7 @@ Renders the full Services overview: every category that has **Gebruik op Service
 |---|---|---|
 | `taxonomy` | `cl_service_category` | Taxonomy used for the service list. |
 | `limit` | `-1` | Maximum number of services. |
-| `case_post_type` | `product_review` | Post type for linked Cases. If it does not exist, a matching Cases post type is detected automatically. |
+| `case_post_type` | `product_review` | Deprecated and ignored (kept for backward compatibility). Cases are always read from the CodeLine Cases post type `blc-product-review`; no other post type can be selected. |
 | `case_taxonomy` | `product_review_category` | Taxonomy used to find Cases when none are selected manually. |
 | `case_count` | `2` | Cases per service (1–8). |
 | `case_link_mode` | `single` | `single` links to each Case; `archive` links to the category archive. |
@@ -358,7 +358,7 @@ Do **not** include:
 
 - **The slider looks unstyled or outdated.**
   - Clear the page cache or CDN cache.
-  - Confirm `services-cards.css?ver=1.5.6` is loading.
+  - Confirm `services-cards.css?ver=1.5.7` is loading.
 - **Arrows do not appear on desktop.**
   - Arrows only show at 1200px and wider.
   - They are hidden when all cards fit on screen.

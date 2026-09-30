@@ -2,7 +2,7 @@
 /**
  * Plugin Name: CodeLine Services Cards
  * Description: Beheer en toon CodeLine service cards, service pages en een lichte geanimeerde achtergrond.
- * Version: 1.5.6
+ * Version: 1.5.7
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Text Domain: codeline-services-cards
@@ -33,13 +33,15 @@ final class CodeLine_Services_Cards {
     use CodeLine_Services_Cards_Frontend_Trait;
     use CodeLine_Services_Cards_Slider_Settings_Trait;
 
-    const VERSION = '1.5.6';
+    const VERSION = '1.5.7';
     const DEFAULT_CARD_LIMIT = 4;
     const POST_TYPE = 'post';
     const SERVICE_POST_TYPE = 'cl_service_page';
     const SERVICE_TAXONOMY = 'cl_service_category';
     const SERVICE_REWRITE_SLUG = 'service-page';
     const CASE_POST_TYPE_DEFAULT = 'product_review';
+    // Registered by Blocksy Companion / CodeLine Cases (CODELINE_CASES_POST_TYPE); the only post type Cases are read from.
+    const CASE_POST_TYPE_ALLOWED = 'blc-product-review';
     const CASE_TAXONOMY_DEFAULT = 'product_review_category';
     const META_IMAGE_ID = '_cl_service_image_id';
     const META_CARD_TITLE = '_cl_service_card_title';

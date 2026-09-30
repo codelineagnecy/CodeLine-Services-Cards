@@ -508,7 +508,7 @@ trait CodeLine_Services_Cards_Admin_Trait {
             $selected_case_1 = (int) get_term_meta($term->term_id, self::TERM_META_SERVICE_CASE_1, true);
             $selected_case_2 = (int) get_term_meta($term->term_id, self::TERM_META_SERVICE_CASE_2, true);
             $case_posts = $this->get_case_posts_for_selector();
-            $service_page_id = $this->ensure_service_page_for_term((int) $term->term_id);
+            $service_page_id = $this->find_service_page_for_term((int) $term->term_id);
             $service_page_edit_url = $service_page_id > 0 ? get_edit_post_link($service_page_id, '') : '';
             ?>
             <tr class="form-field term-group-wrap">
@@ -958,7 +958,13 @@ trait CodeLine_Services_Cards_Admin_Trait {
                     var attachment = frame.state().get('selection').first().toJSON();
                     if (input && attachment.id) input.value = attachment.id;
                     if (preview && attachment.url) {
-                        preview.innerHTML = '<img src=\'' + attachment.url + '\' alt=\'' + (attachment.alt || '') + '\' class=\'clsc-preview-img\' />';
+                        // Build the preview with DOM properties so attachment data is never parsed as HTML.
+                        var img = document.createElement('img');
+                        img.src = String(attachment.url);
+                        img.alt = attachment.alt ? String(attachment.alt) : '';
+                        img.className = 'clsc-preview-img';
+                        while (preview.firstChild) preview.removeChild(preview.firstChild);
+                        preview.appendChild(img);
                     }
                 });
 

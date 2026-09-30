@@ -206,12 +206,44 @@ trait CodeLine_Services_Cards_Core_Trait {
             wp_delete_post($linked_page_id, true);
         }
 
+    /**
+     * Read-only lookup of the Service Page linked to a category.
+     *
+     * Never creates, updates or links anything: that only happens in
+     * ensure_service_page_for_term(), called from the nonce- and
+     * capability-checked category save handler.
+     */
+    private function find_service_page_for_term($term_id) {
+            $term_id = absint($term_id);
+            if ($term_id <= 0) {
+                return 0;
+            }
+
+            $existing_id = (int) get_term_meta($term_id, self::TERM_META_SERVICE_PAGE_ID, true);
+            if ($existing_id > 0 && self::SERVICE_POST_TYPE === get_post_type($existing_id)) {
+                return $existing_id;
+            }
+
+            $term = get_term($term_id, self::SERVICE_TAXONOMY);
+            if (!($term instanceof WP_Term)) {
+                return 0;
+            }
+
+            $matched = get_page_by_path($term->slug, OBJECT, self::SERVICE_POST_TYPE);
+            if ($matched instanceof WP_Post && (int) $matched->ID > 0) {
+                return (int) $matched->ID;
+            }
+
+            return 0;
+        }
+
     private function resolve_service_read_more_url($term) {
             if (!($term instanceof WP_Term)) {
                 return '';
             }
 
-            $page_id = $this->ensure_service_page_for_term((int) $term->term_id);
+            // Frontend rendering must stay read-only (no writes on GET/anonymous requests).
+            $page_id = $this->find_service_page_for_term((int) $term->term_id);
             if ($page_id > 0 && 'publish' === get_post_status($page_id)) {
                 $url = get_permalink($page_id);
                 return is_string($url) ? $url : '';
@@ -310,53 +342,16 @@ trait CodeLine_Services_Cards_Core_Trait {
             return $posts;
         }
 
-    private function resolve_case_post_type($requested) {
-            $requested = sanitize_key((string) $requested);
-            if ('' !== $requested && post_type_exists($requested)) {
-                return $requested;
-            }
-
-            $candidates = array(
-                self::CASE_POST_TYPE_DEFAULT,
-                'blc-product-review',
-                'blc_product_review',
-                'product_reviews',
-                'product_review_case',
-                'product-review-case',
-                'product-review',
-                'product-reviews',
-                'case',
-                'cases',
-            );
-
-            foreach ($candidates as $candidate) {
-                $candidate = sanitize_key((string) $candidate);
-                if ('' !== $candidate && post_type_exists($candidate)) {
-                    return $candidate;
-                }
-            }
-
-            // Last-resort detection for other websites with custom slugs.
-            $all_post_types = get_post_types(array('show_ui' => true), 'objects');
-            foreach ($all_post_types as $post_type_obj) {
-                $name = isset($post_type_obj->name) ? strtolower((string) $post_type_obj->name) : '';
-                $label = isset($post_type_obj->label) ? strtolower((string) $post_type_obj->label) : '';
-                $plural = isset($post_type_obj->labels->name) ? strtolower((string) $post_type_obj->labels->name) : '';
-
-                if (in_array($name, array('post', 'page', 'attachment', self::SERVICE_POST_TYPE), true)) {
-                    continue;
-                }
-
-                $haystack = trim($name . ' ' . $label . ' ' . $plural);
-                $is_product_review = (false !== strpos($haystack, 'product') && false !== strpos($haystack, 'review'));
-                $is_case = (false !== strpos($haystack, 'case'));
-
-                if ($is_product_review || $is_case) {
-                    return $post_type_obj->name;
-                }
-            }
-
-            return '';
+    /**
+     * Returns the one post type Cases may be read from.
+     *
+     * The requested value (e.g. the legacy case_post_type shortcode
+     * attribute) is accepted for backward compatibility but ignored, so a
+     * shortcode can never expose pages, forms, templates, attachments or any
+     * other internal post type.
+     */
+    private function resolve_case_post_type($requested = '') {
+            return post_type_exists(self::CASE_POST_TYPE_ALLOWED) ? self::CASE_POST_TYPE_ALLOWED : '';
         }
 
     private function resolve_case_taxonomy($post_type, $requested_taxonomy) {
